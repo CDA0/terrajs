@@ -104,14 +104,10 @@ describe('index', () => {
     let tf;
     let buildCommand;
     let template;
-    let exec;
-    let promisify;
+    let shExec;
 
     beforeEach(() => {
-      exec = td.function();
-      promisify = td.function();
-      td.replace('util', { promisify });
-      td.when(promisify(td.matchers.anything())).thenReturn(exec);
+      shExec = td.replace('./shExec');
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
@@ -125,7 +121,13 @@ describe('index', () => {
 
     it('should call exec with the compiled template', () => {
       tf.buildAndExec('test', { test: 'abc' });
-      td.verify(exec('template', {}));
+      td.verify(shExec('template', {}));
+    });
+
+    it('should pass cwd to if terraformDir is set', () => {
+      tf.terraformDir = 'pop';
+      tf.buildAndExec('test', { test: 'abc' });
+      td.verify(shExec('template', { cwd: 'pop' }));
     });
   });
 

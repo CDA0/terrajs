@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const util = require('util');
-const { exec } = require('child_process');
 const debug = require('debug')('terrajs');
 const merge = require('deepmerge');
 const Handlebars = require('handlebars');
@@ -9,9 +7,8 @@ const Handlebars = require('handlebars');
 const { templatePath } = require('./constants');
 const registerPartials = require('./registerPartials');
 const registerHelpers = require('./registerHelpers');
+const shExec = require('./shExec');
 const defaults = require('./defaults');
-
-const execAsync = util.promisify(exec);
 
 class Terrajs {
   constructor(options = {}) {
@@ -37,10 +34,10 @@ class Terrajs {
     return tfCmd;
   }
 
-  buildAndExec(action, args) {
+  async buildAndExec(action, args) {
     const cmd = this.buildCommand(action, args);
     const opts = this.terraformDir ? { cwd: this.terraformDir } : {};
-    return execAsync(cmd, opts);
+    return shExec(cmd, opts);
   }
 
   apply(args = {}) {

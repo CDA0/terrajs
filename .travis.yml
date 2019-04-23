@@ -1,0 +1,19 @@
+language: node_js
+sudo: false
+
+node_js:
+  - stable
+
+install: npm ci
+
+script: npm run ci
+
+deploy:
+  provider: npm
+  email: craig.anderson0@gmail.com
+  api_key:
+    secure: FlrM61FV91bc5sW7+iCu1jVFVpx0yK43St9leBbMBbxIBw6SK33+c1Vgww+kj1CfaOg2TkXaGy6A1QqkXG0e6Ao0RufYU1VqcQdX0r9JLlW2dmhBd8wNQnppVVJIYHHota3pa7b7RrCd2WSdwcK54knftPBL4KI5cij/38R34u4zyHRFFirv9TPNxs8EtucsK+9eRXvLvlWWHEe2BD3ZERyh4KNcgpI0O+KY1tl/ZXi3OmJyS9KTJUR7JU6OKkhO0sfm4NPq2r5FuMBGxw1/Pt33AhJGdeeqm29MkY9XywHaKpYmt0+sntzcMAMlzZnaF1oOZtduANOzRQIPw5UuDrE6GjKjarlopSgxo9qMp4tyhEsCEm0z86e18ucTDyr4PyW+4x3PgVBUGq14Jcm3AhrhQC4EAVNiTPNQhOOMdwDStcf53L1zeqs4Jrt8cXwKWtlNdTDutGeTunh0YRRNvMPecsZTGTbgGCKGam6QW8fHp/wlqviK6ABUqkc6fKDwrVQ1e63Kvne2UOlT6Mv/nR8LfrNNHWSxRSQbUHgmY2dM53ifeXNU2bnWum3BydyrAuvwVwSiYwQIdvzxSabtJ8pHWRGOGYQi50IdsLr0t8GUA+UZuI3tKHXcaCF29QqtVraQmfx0nyFt+ZCJLrvMJCBiEvasrZ3qPjp3JmWkF+s=
+  on:
+    tags: true
+    repo: CDA0/terrajs
+    all_branches: true

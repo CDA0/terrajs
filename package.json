@@ -1,0 +1,41 @@
+{
+  "name": "@cda0/terrajs",
+  "version": "0.0.1",
+  "description": "A node interface to terraform",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha **/*.test.js",
+    "coverage": "nyc npm run test",
+    "lint": "eslint ./src/**/*.js",
+    "ci": "npm run lint && npm run coverage"
+  },
+  "repository": "github:cda0/terrajs",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Craig Anderson <craig.anderson0@gmail.com> (https://github.com/cda0)",
+  "contributors": [
+    "Willem Le Roux <willem@avantgardeweb.co.uk> (https://github.com/hofnarwillie)",
+    "Fraser Davidson <fraser@fdavidson.com> (https://github.com/frasdav)"
+  ],
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test"
+    }
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "deepmerge": "^3.2.0",
+    "handlebars": "^4.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "husky": "^1.3.1",
+    "mocha": "^6.1.3",
+    "nyc": "^14.0.0",
+    "testdouble": "^3.11.0"
+  }
+}

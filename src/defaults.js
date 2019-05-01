@@ -47,6 +47,6 @@ module.exports = {
   },
   validate: {
     checkVariables: false,
-    noColour: false,
+    noColor: false,
   },
 };

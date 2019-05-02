@@ -17,6 +17,25 @@ const tf = new Terrajs({ execute: false, terraformDir: 'path/to/files.tf' });
 tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
+### Variables
+
+Variables are mapped from JS camelCase convention to Terraform CLI snake_case convention. For example:
+
+```
+tf.plan({
+  var: {
+    subscriptionId: '123',
+    tenantId: 'abc'
+  }
+});
+```
+
+...will be mapped to the following terraform shell command:
+
+```
+terraform plan -var subscription_id=123 -var tenant_id=abc
+```
+
 ## Test
 
 `npm run test`

@@ -16,7 +16,7 @@ describe('integration', () => {
           foo: 'foo1',
           bar: 'bar1',
         },
-      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -module-depth=-1 -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate -var foo=foo1 -var bar=bar1');
+      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -module-depth=-1 -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate -var foo="foo1" -var bar="bar1"');
     });
 
     it('should map var files flag', () => {

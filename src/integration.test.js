@@ -4,6 +4,22 @@ const assert = require('assert');
 const Terrajs = require('./index');
 
 describe('integration', () => {
+  describe('destroy', () => {
+    let tf;
+    beforeEach(() => {
+      tf = new Terrajs({ execute: false });
+    });
+
+    it('should map var flags', () => {
+      assert.strictEqual(tf.destroy({
+        var: {
+          foo: 'foo1',
+          bar: 'bar1',
+        },
+      }), 'terraform destroy -backup=terraform.backup -lock=true -lock-timeout=0s -no-color -parallelism=10 -refresh=true -state=terraform.tfstate -var foo="foo1" -var bar="bar1"');
+    });
+  });
+
   describe('plan', () => {
     let tf;
     beforeEach(() => {

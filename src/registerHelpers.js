@@ -1,9 +1,8 @@
 const Handlebars = require('handlebars');
+const { camelToKebab, camelToSnake, includes } = require('./helpers');
 
 module.exports = () => {
-  Handlebars.registerHelper('camelToKebeb', str => str.split(/(?=[A-Z])/).join('-').toLowerCase());
-  Handlebars.registerHelper('camelToSnake', str => str.split(/(?=[A-Z])/).join('_').toLowerCase());
-  Handlebars.registerHelper('includes', (a, b, opts) => (a.includes(b)
-    ? opts.fn(this)
-    : opts.inverse(this)));
+  Handlebars.registerHelper('camelToKebab', camelToKebab);
+  Handlebars.registerHelper('camelToSnake', camelToSnake);
+  Handlebars.registerHelper('includes', includes);
 };

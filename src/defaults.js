@@ -1,6 +1,6 @@
 module.exports = {
   apply: {
-    backupPath: 'terraform.backup',
+    backup: 'terraform.backup',
     autoApprove: false,
     lock: true,
     lockTimeout: 0,
@@ -11,6 +11,17 @@ module.exports = {
     state: 'terraform.tfstate',
     stateOut: null,
     plan: '',
+  },
+  destroy: {
+    backup: 'terraform.backup',
+    autoApprove: false,
+    lock: true,
+    lockTimeout: 0,
+    noColor: true,
+    parallelism: 10,
+    refresh: true,
+    state: 'terraform.tfstate',
+    stateOut: null,
   },
   init: {
     backend: true,

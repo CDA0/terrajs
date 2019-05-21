@@ -15,7 +15,6 @@ module.exports = {
   destroy: {
     backup: 'terraform.backup',
     autoApprove: false,
-    force: false,
     lock: true,
     lockTimeout: 0,
     noColor: true,

@@ -1,4 +1,5 @@
 # Terrajs
+
 [![Build Status](https://travis-ci.org/CDA0/terrajs.svg?branch=master)](https://travis-ci.org/CDA0/terrajs)
 [![npm version](https://badge.fury.io/js/%40cda0%2Fterrajs.svg)](https://badge.fury.io/js/%40cda0%2Fterrajs)
 
@@ -8,13 +9,14 @@ A module to help with creating terraform commands.
 
 Terrajs will run terraform commands from the directory pass in with `terraformDir`.
 
-```
+```js
 const tf = new Terrajs( { terraformDir: 'path/to/files.tf' } );
 const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
 To view the generated terraform command without running:
-```
+
+```js
 const tf = new Terrajs({ execute: false, terraformDir: 'path/to/files.tf' });
 tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
@@ -23,7 +25,7 @@ tf.init({ backendConfig: { key: 'MY_KEY' } });
 
 Variables are mapped from JS camelCase convention to Terraform CLI snake_case convention. For example:
 
-```
+```js
 tf.plan({
   var: {
     subscriptionId: '123',
@@ -34,7 +36,7 @@ tf.plan({
 
 ...will be mapped to the following terraform shell command:
 
-```
+```bash
 terraform plan -var subscription_id=123 -var tenant_id=abc
 ```
 

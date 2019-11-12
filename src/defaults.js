@@ -25,7 +25,7 @@ module.exports = {
   },
   fmt: {
     list: true,
-    write: false,
+    write: true,
     diff: false,
     check: false,
     noColor: true,

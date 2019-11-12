@@ -28,8 +28,6 @@ module.exports = {
     write: true,
     diff: false,
     check: false,
-    noColor: true,
-    recursive: false
   },
   init: {
     backend: true,

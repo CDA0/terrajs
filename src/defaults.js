@@ -23,6 +23,12 @@ module.exports = {
     state: 'terraform.tfstate',
     stateOut: null,
   },
+  fmt: {
+    list: true,
+    write: true,
+    diff: false,
+    check: false,
+  },
   init: {
     backend: true,
     backendConfig: {},

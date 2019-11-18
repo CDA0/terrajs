@@ -189,6 +189,35 @@ describe('index', () => {
     });
   });
 
+  describe('fmt', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', () => {
+      tf.execute = false;
+      tf.fmt();
+      td.verify(buildCommand('fmt', {}));
+    });
+
+    it('should call execute command if execute is set', () => {
+      tf.fmt();
+      td.verify(buildAndExec('fmt', {}));
+    });
+  });
+
   describe('init', () => {
     let Terrajs;
     let tf;

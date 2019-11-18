@@ -28,6 +28,8 @@ module.exports = {
     write: true,
     diff: false,
     check: false,
+    noColor: true,
+    recursive: false,
   },
   init: {
     backend: true,
@@ -64,6 +66,7 @@ module.exports = {
   },
   validate: {
     checkVariables: false,
+    json: true,
     noColor: false,
   },
 };

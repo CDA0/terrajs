@@ -26,16 +26,22 @@ class Terrajs {
     return Handlebars.compile(source);
   }
 
-  buildCommand(action, args) {
+  async getTerraformVersion() {
+    const response = await shExec(`${this.command} -version`, { silent: true });
+    return response.split('v')[1].split('.').slice(0, 2).join('.');
+  }
+
+  async buildCommand(action, args) {
     const context = merge(defaults[action], args);
     const template = Terrajs.getTemplate(action);
-    const tfCmd = template({ ...context, command: this.command }).replace(/\r?\n|\r/g, ' ').trim();
+    const tfVersion = await this.getTerraformVersion();
+    const tfCmd = template({ ...context, command: this.command, version: tfVersion }).replace(/\r?\n|\r/g, ' ').trim();
     debug('command: %s', tfCmd);
     return tfCmd;
   }
 
   async buildAndExec(action, args) {
-    const cmd = this.buildCommand(action, args);
+    const cmd = await this.buildCommand(action, args);
     const opts = this.terraformDir ? { cwd: this.terraformDir } : {};
     return shExec(cmd, opts);
   }
@@ -66,6 +72,10 @@ class Terrajs {
 
   validate(args = {}) {
     return this.execute ? this.buildAndExec('validate', args) : this.buildCommand('validate', args);
+  }
+
+  version(args = {}) {
+    return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
   }
 }
 

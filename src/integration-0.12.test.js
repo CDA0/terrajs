@@ -4,13 +4,13 @@ const assert = require('assert');
 const td = require('testdouble');
 const Terrajs = require('./index');
 
-describe('integration (Terraform 0.11)', () => {
+describe('integration (Terraform 0.12)', () => {
   let tf;
 
   beforeEach(() => {
     tf = new Terrajs({ execute: false });
     td.replace(tf, 'getTerraformVersion');
-    td.when(tf.getTerraformVersion()).thenReturn('0.11');
+    td.when(tf.getTerraformVersion()).thenReturn('0.12');
   });
 
   afterEach(() => td.reset());
@@ -33,7 +33,7 @@ describe('integration (Terraform 0.11)', () => {
           foo: 'foo1',
           bar: 'bar1',
         },
-      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -module-depth=-1 -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate -var foo="foo1" -var bar="bar1"');
+      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate -var foo="foo1" -var bar="bar1"');
     });
 
     it('should map var files flag', async () => {
@@ -42,13 +42,13 @@ describe('integration (Terraform 0.11)', () => {
           'foo',
           'bar',
         ],
-      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -module-depth=-1 -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate -var-file=foo -var-file=bar');
+      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate -var-file=foo -var-file=bar');
     });
 
     it('should remove no-color', async () => {
       assert.strictEqual(await tf.plan({
         noColor: false,
-      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -module-depth=-1 -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate');
+      }), 'terraform plan -input=false -lock=true -lock-timeout=0s -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate');
     });
   });
 });

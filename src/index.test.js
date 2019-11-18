@@ -4,6 +4,15 @@ const assert = require('assert');
 const td = require('testdouble');
 
 describe('index', () => {
+  let shExec;
+
+  beforeEach(() => {
+    shExec = td.replace('./shExec');
+    td.when(shExec('terraform -version'), { ignoreExtraArgs: true }).thenReturn('Terraform v0.12.15');
+  });
+
+  afterEach(() => td.reset());
+
   describe('constructor', () => {
     let tf;
     let readFileSync;
@@ -74,6 +83,25 @@ describe('index', () => {
     });
   });
 
+  describe('getTerraformVersion', () => {
+    let Terrajs;
+    let tf;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+    });
+
+    afterEach(() => td.reset());
+
+    it('should return the version string as "Major.Minor"', async () => {
+      const result = await tf.getTerraformVersion();
+      assert.strictEqual(result, '0.12');
+    });
+  });
+
   describe('buildCommand', () => {
     let Terrajs;
     let tf;
@@ -93,8 +121,8 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should trim spaces and replace new lines', () => {
-      const cmd = tf.buildCommand('apply', { test: 'abc' });
+    it('should trim spaces and replace new lines', async () => {
+      const cmd = await tf.buildCommand('apply', { test: 'abc' });
       assert.equal(cmd, 'abc def');
     });
   });
@@ -104,10 +132,8 @@ describe('index', () => {
     let tf;
     let buildCommand;
     let template;
-    let shExec;
 
     beforeEach(() => {
-      shExec = td.replace('./shExec');
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
@@ -119,14 +145,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call exec with the compiled template', () => {
-      tf.buildAndExec('test', { test: 'abc' });
+    it('should call exec with the compiled template', async () => {
+      await tf.buildAndExec('test', { test: 'abc' });
       td.verify(shExec('template', {}));
     });
 
-    it('should pass cwd to if terraformDir is set', () => {
+    it('should pass cwd to if terraformDir is set', async () => {
       tf.terraformDir = 'pop';
-      tf.buildAndExec('test', { test: 'abc' });
+      await tf.buildAndExec('test', { test: 'abc' });
       td.verify(shExec('template', { cwd: 'pop' }));
     });
   });
@@ -148,14 +174,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.apply();
+      await tf.apply();
       td.verify(buildCommand('apply', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.apply();
+    it('should call execute command if execute is set', async () => {
+      await tf.apply();
       td.verify(buildAndExec('apply', {}));
     });
   });
@@ -169,6 +195,7 @@ describe('index', () => {
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
+      td.when(shExec('terraform -version'), { ignoreExtraArgs: true }).thenReturn('Terraform v0.12.15');
       Terrajs = require('./index');
       tf = new Terrajs();
       buildCommand = td.replace(tf, 'buildCommand');
@@ -177,14 +204,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.destroy();
+      await tf.destroy();
       td.verify(buildCommand('destroy', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.destroy();
+    it('should call execute command if execute is set', async () => {
+      await tf.destroy();
       td.verify(buildAndExec('destroy', {}));
     });
   });
@@ -206,14 +233,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.fmt();
+      await tf.fmt();
       td.verify(buildCommand('fmt', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.fmt();
+    it('should call execute command if execute is set', async () => {
+      await tf.fmt();
       td.verify(buildAndExec('fmt', {}));
     });
   });
@@ -235,14 +262,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.init();
+      await tf.init();
       td.verify(buildCommand('init', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.init();
+    it('should call execute command if execute is set', async () => {
+      await tf.init();
       td.verify(buildAndExec('init', {}));
     });
   });
@@ -264,14 +291,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.output();
+      await tf.output();
       td.verify(buildCommand('output', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.output();
+    it('should call execute command if execute is set', async () => {
+      await tf.output();
       td.verify(buildAndExec('output', {}));
     });
   });
@@ -293,14 +320,14 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.plan();
+      await tf.plan();
       td.verify(buildCommand('plan', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.plan();
+    it('should call execute command if execute is set', async () => {
+      await tf.plan();
       td.verify(buildAndExec('plan', {}));
     });
   });
@@ -322,15 +349,44 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', () => {
+    it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      tf.validate();
+      await tf.validate();
       td.verify(buildCommand('validate', {}));
     });
 
-    it('should call execute command if execute is set', () => {
-      tf.validate();
+    it('should call execute command if execute is set', async () => {
+      await tf.validate();
       td.verify(buildAndExec('validate', {}));
+    });
+  });
+
+  describe('version', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.version();
+      td.verify(buildCommand('version', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.version();
+      td.verify(buildAndExec('version', {}));
     });
   });
 });

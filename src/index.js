@@ -29,7 +29,7 @@ class Terrajs {
   buildCommand(action, args) {
     const context = merge(defaults[action], args);
     const template = Terrajs.getTemplate(action);
-    const tfCmd = template({ ...context, command: this.command }).replace(/\n/g, ' ').trim();
+    const tfCmd = template({ ...context, command: this.command }).replace(/\r?\n|\r/g, ' ').trim();
     debug('command: %s', tfCmd);
     return tfCmd;
   }

@@ -1,5 +1,7 @@
 {{command}} output
 {{> state }}
 {{> no-color }}
+{{#ifeq version '0.11'}}
 {{> module }}
+{{/ifeq}}
 {{> json }}

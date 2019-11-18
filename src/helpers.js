@@ -17,7 +17,7 @@ function switchHandlebarHelper(value, opts) {
 }
 
 function caseHandlebarHelper() {
-  /* eslint-disable prefer-rest-params */
+  /* eslint-disable-next-line prefer-rest-params */
   const args = Array.prototype.slice.call(arguments);
   const opts = args.pop();
   const caseValues = args;

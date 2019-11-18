@@ -3,4 +3,8 @@
 {{> write }}
 {{> diff }}
 {{> check }}
+{{#ifeq version '0.12'}}
+{{> no-color }}
+{{> recursive }}
+{{/ifeq}}
 {{dir}}

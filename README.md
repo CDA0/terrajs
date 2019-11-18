@@ -40,6 +40,29 @@ tf.plan({
 terraform plan -var subscription_id=123 -var tenant_id=abc
 ```
 
+### Lists
+
+Passing a list variable requires some additional preparation. For example:
+
+```js
+const subnetArray = [ 'subnetA', 'subnetB' ]
+const subnetString = subnetArray.length
+  ? `[\\"${subnetArray.join('\\", \\"')}\\"]`
+  : '';
+
+tf.plan({
+  var: {
+    subnets: subnetString
+  }
+});
+```
+
+...will be mapped to the following terraform shell command:
+
+```bash
+terraform plan -var "subnets=[\"subnetA\", \"subnetB\"]"
+```
+
 ## Test
 
 `npm run test`

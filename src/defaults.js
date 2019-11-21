@@ -66,7 +66,7 @@ module.exports = {
   },
   validate: {
     checkVariables: false,
-    json: true,
+    json: false,
     noColor: false,
   },
 };

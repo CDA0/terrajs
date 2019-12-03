@@ -69,4 +69,21 @@ module.exports = {
     json: false,
     noColor: false,
   },
+  taint: {
+    allowMissing: false,
+    backup: 'terraform.backup',
+    lock: true,
+    lockTimeout: 0,
+    state: 'terraform.tfstate',
+    stateOut: null,
+  },
+  untaint: {
+    allowMissing: false,
+    backup: 'terraform.backup',
+    lock: true,
+    lockTimeout: 0,
+    noColor: true,
+    state: 'terraform.tfstate',
+    stateOut: null,
+  },
 };

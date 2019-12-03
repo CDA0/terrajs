@@ -14,6 +14,8 @@ const example = async () => {
     await tf.apply({ var: { environment: 'SP', location: 'westeurope' } }),
     await tf.apply({ var: { environment: 'SP', location: 'westeurope' }, plan: 'terraform.tfplan' }),
     await tf.output({ json: true }),
+    await tf.taint(),
+    await tf.untaint(),
   ].forEach(command => console.log(command));
 };
 

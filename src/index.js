@@ -77,6 +77,14 @@ class Terrajs {
   version(args = {}) {
     return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
   }
+
+  taint(args = {}) {
+    return this.execute ? this.buildAndExec('taint', args) : this.buildCommand('taint', args);
+  }
+
+  untaint(args = {}) {
+    return this.execute ? this.buildAndExec('untaint', args) : this.buildCommand('untaint', args);
+  }
 }
 
 module.exports = Terrajs;

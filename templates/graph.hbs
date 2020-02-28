@@ -1,0 +1,10 @@
+{{command}} graph
+{{> draw-cycles }}
+{{#ifeq version '0.12'}}
+{{> module-depth }}
+{{/ifeq}}
+{{#ifeq version '0.11'}}
+{{> no-color }}
+{{/ifeq}}
+{{> type }}
+{{dir}}

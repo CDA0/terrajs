@@ -14,6 +14,7 @@ A module to help with creating terraform commands.
 - `init`
 - `output`
 - `plan`
+- `providers`
 - `taint`
 - `untaint`
 - `validate`

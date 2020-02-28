@@ -10,6 +10,7 @@ const example = async () => {
     await tf.fmt({ check: false, diff: true }),
     await tf.fmt({ check: true, diff: true, dir: 'some/path' }),
     await tf.graph({ drawCycles: true, type: 'plan', dir: 'some/path' }),
+    await tf.providers({ dir: 'some/path' }),
     await tf.init({ backendConfig: { key: 'KEYKEYKEY' } }),
     await tf.import({ address: 'a_resource.exmple', id: '/unique/identifier' }),
     await tf.plan({ var: { environment: 'SP', location: 'westeurope' } }),

@@ -79,6 +79,8 @@ module.exports = {
     state: 'terraform.tfstate',
     plan: '',
   },
+  providers: {
+  },
   validate: {
     checkVariables: false,
     json: false,

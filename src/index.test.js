@@ -390,6 +390,35 @@ describe('index', () => {
     });
   });
 
+  describe('providers', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.providers();
+      td.verify(buildCommand('providers', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.providers();
+      td.verify(buildAndExec('providers', {}));
+    });
+  });
+
   describe('validate', () => {
     let Terrajs;
     let tf;

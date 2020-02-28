@@ -94,20 +94,20 @@ class Terrajs {
     return this.execute ? this.buildAndExec('show', args) : this.buildCommand('show', args);
   }
 
-  validate(args = {}) {
-    return this.execute ? this.buildAndExec('validate', args) : this.buildCommand('validate', args);
-  }
-
-  version(args = {}) {
-    return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
-  }
-
   taint(args = {}) {
     return this.execute ? this.buildAndExec('taint', args) : this.buildCommand('taint', args);
   }
 
   untaint(args = {}) {
     return this.execute ? this.buildAndExec('untaint', args) : this.buildCommand('untaint', args);
+  }
+
+  validate(args = {}) {
+    return this.execute ? this.buildAndExec('validate', args) : this.buildCommand('validate', args);
+  }
+
+  version(args = {}) {
+    return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
   }
 }
 

@@ -98,11 +98,6 @@ module.exports = {
     moduleDepth: -1,
     noColor: true,
   },
-  validate: {
-    checkVariables: false,
-    json: false,
-    noColor: false,
-  },
   taint: {
     allowMissing: false,
     backup: 'terraform.backup',
@@ -119,5 +114,10 @@ module.exports = {
     noColor: true,
     state: 'terraform.tfstate',
     stateOut: null,
+  },
+  validate: {
+    checkVariables: false,
+    json: false,
+    noColor: false,
   },
 };

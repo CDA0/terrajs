@@ -45,6 +45,16 @@ module.exports = {
     upgrade: false,
     verifyPlugins: true,
   },
+  import: {
+    backup: 'terraform.backup',
+    allowMissingConfig: false,
+    input: false,
+    lock: true,
+    lockTimeout: 0,
+    noColor: true,
+    state: 'terraform.tfstate',
+    stateOut: null,
+  },
   output: {
     state: 'terraform.tfstate',
     noColor: true,

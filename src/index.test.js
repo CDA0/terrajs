@@ -274,6 +274,35 @@ describe('index', () => {
     });
   });
 
+  describe('import', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.import();
+      td.verify(buildCommand('import', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.import();
+      td.verify(buildAndExec('import', {}));
+    });
+  });
+
   describe('output', () => {
     let Terrajs;
     let tf;

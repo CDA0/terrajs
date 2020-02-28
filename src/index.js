@@ -62,6 +62,10 @@ class Terrajs {
     return this.execute ? this.buildAndExec('init', args) : this.buildCommand('init', args);
   }
 
+  import(args = {}) {
+    return this.execute ? this.buildAndExec('import', args) : this.buildCommand('import', args);
+  }
+
   output(args = {}) {
     return this.execute ? this.buildAndExec('output', args) : this.buildCommand('output', args);
   }

@@ -31,6 +31,10 @@ module.exports = {
     noColor: true,
     recursive: false,
   },
+  get: {
+    update: false,
+    noColor: true,
+  },
   graph: {
     drawCycles: true,
     moduleDepth: -1,

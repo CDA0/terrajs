@@ -9,6 +9,7 @@ A module to help with creating terraform commands.
 
 - `apply`
 - `fmt`
+- `get`
 - `graph`
 - `import`
 - `init`

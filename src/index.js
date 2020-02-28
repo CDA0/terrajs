@@ -58,6 +58,10 @@ class Terrajs {
     return this.execute ? this.buildAndExec('fmt', args) : this.buildCommand('fmt', args);
   }
 
+  get(args = {}) {
+    return this.execute ? this.buildAndExec('get', args) : this.buildCommand('get', args);
+  }
+
   graph(args = {}) {
     return this.execute ? this.buildAndExec('graph', args) : this.buildCommand('graph', args);
   }

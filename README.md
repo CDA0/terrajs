@@ -22,6 +22,12 @@ A module to help with creating terraform commands.
 - `untaint`
 - `validate`
 - `version`
+- `workspace`
+  - `delete`
+  - `list`
+  - `new`
+  - `select`
+  - `show`
 
 ## Usage
 

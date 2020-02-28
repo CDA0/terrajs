@@ -120,4 +120,24 @@ module.exports = {
     json: false,
     noColor: false,
   },
+  'workspace-delete': {
+    force: false,
+    lock: true,
+    lockTimeout: 0,
+    dir: '',
+  },
+  'workspace-list': {
+    dir: '',
+  },
+  'workspace-new': {
+    lock: true,
+    lockTimeout: 0,
+    state: '',
+    dir: '',
+  },
+  'workspace-select': {
+    dir: '',
+  },
+  'workspace-show': {
+  },
 };

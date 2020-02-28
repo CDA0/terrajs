@@ -109,6 +109,26 @@ class Terrajs {
   version(args = {}) {
     return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
   }
+
+  workspaceDelete(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-delete', args) : this.buildCommand('workspace-delete', args);
+  }
+
+  workspaceList(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-list', args) : this.buildCommand('workspace-list', args);
+  }
+
+  workspaceNew(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-new', args) : this.buildCommand('workspace-new', args);
+  }
+
+  workspaceSelect(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-select', args) : this.buildCommand('workspace-select', args);
+  }
+
+  workspaceShow(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-show', args) : this.buildCommand('workspace-show', args);
+  }
 }
 
 module.exports = Terrajs;

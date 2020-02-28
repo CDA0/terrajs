@@ -22,6 +22,12 @@ const example = async () => {
     await tf.output({ json: true }),
     await tf.taint({ resource: 'resource' }),
     await tf.untaint({ resource: 'resource' }),
+
+    await tf.workspaceDelete({ name: 'dev' }),
+    await tf.workspaceList({ dir: 'some/path' }),
+    await tf.workspaceNew({ name: 'dev' }),
+    await tf.workspaceSelect({ name: 'dev' }),
+    await tf.workspaceShow(),
   ].forEach(command => console.log(command));
 };
 

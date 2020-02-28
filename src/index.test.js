@@ -621,4 +621,149 @@ describe('index', () => {
       td.verify(buildAndExec('version', {}));
     });
   });
+
+  describe('workspaceDelete', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceDelete();
+      td.verify(buildCommand('workspace-delete', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceDelete();
+      td.verify(buildAndExec('workspace-delete', {}));
+    });
+  });
+
+  describe('workspaceList', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceList();
+      td.verify(buildCommand('workspace-list', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceList();
+      td.verify(buildAndExec('workspace-list', {}));
+    });
+  });
+
+  describe('workspaceNew', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceNew();
+      td.verify(buildCommand('workspace-new', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceNew();
+      td.verify(buildAndExec('workspace-new', {}));
+    });
+  });
+
+  describe('workspaceSelect', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceSelect();
+      td.verify(buildCommand('workspace-select', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceSelect();
+      td.verify(buildAndExec('workspace-select', {}));
+    });
+  });
+
+  describe('workspaceShow', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceShow();
+      td.verify(buildCommand('workspace-show', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceShow();
+      td.verify(buildAndExec('workspace-show', {}));
+    });
+  });
 });

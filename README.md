@@ -16,6 +16,7 @@ A module to help with creating terraform commands.
 - `plan`
 - `providers`
 - `refresh`
+- `show`
 - `taint`
 - `untaint`
 - `validate`

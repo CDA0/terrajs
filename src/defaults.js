@@ -90,6 +90,10 @@ module.exports = {
     state: 'terraform.tfstate',
     dir: '',
   },
+  show: {
+    moduleDepth: -1,
+    noColor: true,
+  },
   validate: {
     checkVariables: false,
     json: false,

@@ -86,6 +86,10 @@ class Terrajs {
     return this.execute ? this.buildAndExec('refresh', args) : this.buildCommand('refresh', args);
   }
 
+  show(args = {}) {
+    return this.execute ? this.buildAndExec('show', args) : this.buildCommand('show', args);
+  }
+
   validate(args = {}) {
     return this.execute ? this.buildAndExec('validate', args) : this.buildCommand('validate', args);
   }

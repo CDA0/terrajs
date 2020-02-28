@@ -11,6 +11,7 @@ const example = async () => {
     await tf.fmt({ check: true, diff: true, dir: 'some/path' }),
     await tf.graph({ drawCycles: true, type: 'plan', dir: 'some/path' }),
     await tf.providers({ dir: 'some/path' }),
+    await tf.show({ moduleDepth: 5 }),
     await tf.init({ backendConfig: { key: 'KEYKEYKEY' } }),
     await tf.import({ address: 'a_resource.exmple', id: '/unique/identifier' }),
     await tf.refresh({ var: { environment: 'SP' }, target: ['a_resource.example'] }),

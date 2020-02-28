@@ -81,6 +81,15 @@ module.exports = {
   },
   providers: {
   },
+  refresh: {
+    backup: 'terraform.backup',
+    input: false,
+    lock: true,
+    lockTimeout: 0,
+    noColor: true,
+    state: 'terraform.tfstate',
+    dir: '',
+  },
   validate: {
     checkVariables: false,
     json: false,

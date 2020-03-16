@@ -31,6 +31,15 @@ module.exports = {
     noColor: true,
     recursive: false,
   },
+  get: {
+    update: false,
+    noColor: true,
+  },
+  graph: {
+    drawCycles: true,
+    moduleDepth: -1,
+    noColor: true,
+  },
   init: {
     backend: true,
     backendConfig: {},
@@ -44,6 +53,16 @@ module.exports = {
     reconfigure: false,
     upgrade: false,
     verifyPlugins: true,
+  },
+  import: {
+    backup: 'terraform.backup',
+    allowMissingConfig: false,
+    input: false,
+    lock: true,
+    lockTimeout: 0,
+    noColor: true,
+    state: 'terraform.tfstate',
+    stateOut: null,
   },
   output: {
     state: 'terraform.tfstate',
@@ -64,10 +83,20 @@ module.exports = {
     state: 'terraform.tfstate',
     plan: '',
   },
-  validate: {
-    checkVariables: false,
-    json: false,
-    noColor: false,
+  providers: {
+  },
+  refresh: {
+    backup: 'terraform.backup',
+    input: false,
+    lock: true,
+    lockTimeout: 0,
+    noColor: true,
+    state: 'terraform.tfstate',
+    dir: '',
+  },
+  show: {
+    moduleDepth: -1,
+    noColor: true,
   },
   taint: {
     allowMissing: false,
@@ -85,5 +114,30 @@ module.exports = {
     noColor: true,
     state: 'terraform.tfstate',
     stateOut: null,
+  },
+  validate: {
+    checkVariables: false,
+    json: false,
+    noColor: false,
+  },
+  'workspace-delete': {
+    force: false,
+    lock: true,
+    lockTimeout: 0,
+    dir: '',
+  },
+  'workspace-list': {
+    dir: '',
+  },
+  'workspace-new': {
+    lock: true,
+    lockTimeout: 0,
+    state: '',
+    dir: '',
+  },
+  'workspace-select': {
+    dir: '',
+  },
+  'workspace-show': {
   },
 };

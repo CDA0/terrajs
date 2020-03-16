@@ -58,8 +58,20 @@ class Terrajs {
     return this.execute ? this.buildAndExec('fmt', args) : this.buildCommand('fmt', args);
   }
 
+  get(args = {}) {
+    return this.execute ? this.buildAndExec('get', args) : this.buildCommand('get', args);
+  }
+
+  graph(args = {}) {
+    return this.execute ? this.buildAndExec('graph', args) : this.buildCommand('graph', args);
+  }
+
   init(args = {}) {
     return this.execute ? this.buildAndExec('init', args) : this.buildCommand('init', args);
+  }
+
+  import(args = {}) {
+    return this.execute ? this.buildAndExec('import', args) : this.buildCommand('import', args);
   }
 
   output(args = {}) {
@@ -70,12 +82,16 @@ class Terrajs {
     return this.execute ? this.buildAndExec('plan', args) : this.buildCommand('plan', args);
   }
 
-  validate(args = {}) {
-    return this.execute ? this.buildAndExec('validate', args) : this.buildCommand('validate', args);
+  providers(args = {}) {
+    return this.execute ? this.buildAndExec('providers', args) : this.buildCommand('providers', args);
   }
 
-  version(args = {}) {
-    return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
+  refresh(args = {}) {
+    return this.execute ? this.buildAndExec('refresh', args) : this.buildCommand('refresh', args);
+  }
+
+  show(args = {}) {
+    return this.execute ? this.buildAndExec('show', args) : this.buildCommand('show', args);
   }
 
   taint(args = {}) {
@@ -84,6 +100,34 @@ class Terrajs {
 
   untaint(args = {}) {
     return this.execute ? this.buildAndExec('untaint', args) : this.buildCommand('untaint', args);
+  }
+
+  validate(args = {}) {
+    return this.execute ? this.buildAndExec('validate', args) : this.buildCommand('validate', args);
+  }
+
+  version(args = {}) {
+    return this.execute ? this.buildAndExec('version', args) : this.buildCommand('version', args);
+  }
+
+  workspaceDelete(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-delete', args) : this.buildCommand('workspace-delete', args);
+  }
+
+  workspaceList(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-list', args) : this.buildCommand('workspace-list', args);
+  }
+
+  workspaceNew(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-new', args) : this.buildCommand('workspace-new', args);
+  }
+
+  workspaceSelect(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-select', args) : this.buildCommand('workspace-select', args);
+  }
+
+  workspaceShow(args = {}) {
+    return this.execute ? this.buildAndExec('workspace-show', args) : this.buildCommand('workspace-show', args);
   }
 }
 

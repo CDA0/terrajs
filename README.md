@@ -5,6 +5,30 @@
 
 A module to help with creating terraform commands.
 
+## Supported Commands
+
+- `apply`
+- `fmt`
+- `get`
+- `graph`
+- `import`
+- `init`
+- `output`
+- `plan`
+- `providers`
+- `refresh`
+- `show`
+- `taint`
+- `untaint`
+- `validate`
+- `version`
+- `workspace`
+  - `delete`
+  - `list`
+  - `new`
+  - `select`
+  - `show`
+
 ## Usage
 
 Terrajs will run terraform commands from the directory pass in with `terraformDir`.

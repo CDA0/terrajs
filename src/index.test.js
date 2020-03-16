@@ -245,6 +245,64 @@ describe('index', () => {
     });
   });
 
+  describe('get', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.get();
+      td.verify(buildCommand('get', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.get();
+      td.verify(buildAndExec('get', {}));
+    });
+  });
+
+  describe('graph', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.graph();
+      td.verify(buildCommand('graph', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.graph();
+      td.verify(buildAndExec('graph', {}));
+    });
+  });
+
   describe('init', () => {
     let Terrajs;
     let tf;
@@ -271,6 +329,35 @@ describe('index', () => {
     it('should call execute command if execute is set', async () => {
       await tf.init();
       td.verify(buildAndExec('init', {}));
+    });
+  });
+
+  describe('import', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.import();
+      td.verify(buildCommand('import', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.import();
+      td.verify(buildAndExec('import', {}));
     });
   });
 
@@ -332,6 +419,151 @@ describe('index', () => {
     });
   });
 
+  describe('providers', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.providers();
+      td.verify(buildCommand('providers', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.providers();
+      td.verify(buildAndExec('providers', {}));
+    });
+  });
+
+  describe('refresh', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.refresh();
+      td.verify(buildCommand('refresh', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.refresh();
+      td.verify(buildAndExec('refresh', {}));
+    });
+  });
+
+  describe('show', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.show();
+      td.verify(buildCommand('show', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.show();
+      td.verify(buildAndExec('show', {}));
+    });
+  });
+
+  describe('taint', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.taint();
+      td.verify(buildCommand('taint', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.taint();
+      td.verify(buildAndExec('taint', {}));
+    });
+  });
+
+  describe('untaint', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.untaint();
+      td.verify(buildCommand('untaint', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.untaint();
+      td.verify(buildAndExec('untaint', {}));
+    });
+  });
+
   describe('validate', () => {
     let Terrajs;
     let tf;
@@ -387,6 +619,151 @@ describe('index', () => {
     it('should call execute command if execute is set', async () => {
       await tf.version();
       td.verify(buildAndExec('version', {}));
+    });
+  });
+
+  describe('workspaceDelete', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceDelete();
+      td.verify(buildCommand('workspace-delete', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceDelete();
+      td.verify(buildAndExec('workspace-delete', {}));
+    });
+  });
+
+  describe('workspaceList', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceList();
+      td.verify(buildCommand('workspace-list', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceList();
+      td.verify(buildAndExec('workspace-list', {}));
+    });
+  });
+
+  describe('workspaceNew', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceNew();
+      td.verify(buildCommand('workspace-new', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceNew();
+      td.verify(buildAndExec('workspace-new', {}));
+    });
+  });
+
+  describe('workspaceSelect', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceSelect();
+      td.verify(buildCommand('workspace-select', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceSelect();
+      td.verify(buildAndExec('workspace-select', {}));
+    });
+  });
+
+  describe('workspaceShow', () => {
+    let Terrajs;
+    let tf;
+    let buildCommand;
+    let buildAndExec;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      buildCommand = td.replace(tf, 'buildCommand');
+      buildAndExec = td.replace(tf, 'buildAndExec');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call build command if execute is not set', async () => {
+      tf.execute = false;
+      await tf.workspaceShow();
+      td.verify(buildCommand('workspace-show', {}));
+    });
+
+    it('should call execute command if execute is set', async () => {
+      await tf.workspaceShow();
+      td.verify(buildAndExec('workspace-show', {}));
     });
   });
 });

@@ -50,5 +50,11 @@ describe('integration (Terraform 0.11)', () => {
         noColor: false,
       }), 'terraform plan -input=false -lock=true -lock-timeout=0s -module-depth=-1 -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate');
     });
+
+    it('should include detailed-exitcode', async () => {
+      assert.strictEqual(await tf.plan({
+        detailedExitcode: true,
+      }), 'terraform plan -detailed-exitcode -input=false -lock=true -lock-timeout=0s -module-depth=-1 -no-color -out=terraform -parallelism=10 -refresh=true -state=terraform.tfstate');
+    });
   });
 });

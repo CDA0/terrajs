@@ -1,6 +1,6 @@
 {
   "name": "@cda0/terrajs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A node interface to terraform",
   "main": "src/index.js",
   "scripts": {

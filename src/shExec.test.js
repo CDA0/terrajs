@@ -41,11 +41,15 @@ describe('shExec', () => {
     afterEach(() => {
       td.reset();
     });
-    it('should reject with stderr', async () => {
+
+    it('should reject with stdout, stderr, and an exit code', async () => {
       try {
         await shExec('test', { cwd: 'cwd' });
       } catch (e) {
-        assert.equal(e, 'stderr');
+        assert(e instanceof Error);
+        assert.equal(e.code, 1);
+        assert.equal(e.stdout, 'stdout');
+        assert.equal(e.stderr, 'stderr');
       }
     });
   });

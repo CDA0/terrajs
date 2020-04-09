@@ -4,7 +4,7 @@
   "description": "A node interface to terraform",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha **/*.test.js",
+    "test": "mocha ./src/**/*.test.js",
     "coverage": "nyc npm run test",
     "lint": "eslint ./src/**/*.js",
     "ci": "npm run lint && npm run coverage"
@@ -35,7 +35,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.3",
-    "mocha": "^6.2.3",
+    "mocha": "^7.1.1",
     "nyc": "^15.0.1",
     "testdouble": "^3.13.1"
   }

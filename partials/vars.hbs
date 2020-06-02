@@ -1,3 +1,7 @@
 {{#each var}}
+{{#ifArray this}}
+-var '{{camelToSnake @key}}=[{{#each this}}"{{{this}}}"{{#unless @last}},{{/unless}}{{/each}}]'
+{{else}}
 -var {{camelToSnake @key}}="{{{this}}}"
+{{/ifArray}}
 {{/each}}

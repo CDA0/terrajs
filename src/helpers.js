@@ -37,6 +37,10 @@ function defaultHandlebarHelper(opts) {
   return (!this.switch_break ? opts.fn(this) : '');
 }
 
+function ifArray(value, opts) {
+  return (value instanceof Array) ? opts.fn(this) : opts.inverse(this);
+}
+
 module.exports = {
   camelToKebab,
   camelToSnake,
@@ -46,4 +50,5 @@ module.exports = {
   switchHandlebarHelper,
   caseHandlebarHelper,
   defaultHandlebarHelper,
+  ifArray,
 };

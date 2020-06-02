@@ -8,6 +8,7 @@ const {
   switchHandlebarHelper,
   caseHandlebarHelper,
   defaultHandlebarHelper,
+  ifArray,
 } = require('./helpers');
 
 module.exports = () => {
@@ -19,4 +20,5 @@ module.exports = () => {
   Handlebars.registerHelper('switch', switchHandlebarHelper);
   Handlebars.registerHelper('case', caseHandlebarHelper);
   Handlebars.registerHelper('default', defaultHandlebarHelper);
+  Handlebars.registerHelper('ifArray', ifArray);
 };

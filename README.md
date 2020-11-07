@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/CDA0/terrajs.svg?branch=master)](https://travis-ci.org/CDA0/terrajs)
 [![npm version](https://badge.fury.io/js/%40cda0%2Fterrajs.svg)](https://badge.fury.io/js/%40cda0%2Fterrajs)
 
-A module to help with creating terraform commands.
+A module to help with creating Terraform commands.
 
 ## Supported Commands
 
@@ -31,60 +31,46 @@ A module to help with creating terraform commands.
 
 ## Usage
 
-Terrajs will run terraform commands from the directory pass in with `terraformDir`.
+Terrajs will run Terraform commands from the directory passed in with `terraformDir`.
 
 ```js
 const tf = new Terrajs( { terraformDir: 'path/to/files.tf' } );
 const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
-To view the generated terraform command without running:
+To view the generated Terraform command without running:
 
 ```js
 const tf = new Terrajs({ execute: false, terraformDir: 'path/to/files.tf' });
 tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
+If you need to use a Terraform binary that's not on your path as `terraform`,
+then you can tell Terrajs where to find it in the constructor.
+
+```js
+const tf = new Terrajs( { command: 'terraform12', terraformDir: 'path/to/files.tf' } );
+const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
+```
+
 ### Variables
 
-Variables are mapped from JS camelCase convention to Terraform CLI snake_case convention. For example:
+Variables are mapped from JavaScript camelCase convention to Terraform CLI snake_case convention. For example:
 
 ```js
 tf.plan({
   var: {
     subscriptionId: '123',
-    tenantId: 'abc'
+    tenantId: 'abc',
+    zones: ['A', 'B'],
   }
 });
 ```
 
-...will be mapped to the following terraform shell command:
+...will be mapped to the following Terraform shell command:
 
 ```bash
-terraform plan -var subscription_id=123 -var tenant_id=abc
-```
-
-### Lists
-
-Passing a list variable requires some additional preparation. For example:
-
-```js
-const subnetArray = [ 'subnetA', 'subnetB' ]
-const subnetString = subnetArray.length
-  ? `[\\"${subnetArray.join('\\", \\"')}\\"]`
-  : '';
-
-tf.plan({
-  var: {
-    subnets: subnetString
-  }
-});
-```
-
-...will be mapped to the following terraform shell command:
-
-```bash
-terraform plan -var "subnets=[\"subnetA\", \"subnetB\"]"
+terraform plan -var subscription_id=123 -var tenant_id=abc -var 'zones=["A","B"]'
 ```
 
 ## Test
@@ -97,8 +83,8 @@ terraform plan -var "subnets=[\"subnetA\", \"subnetB\"]"
 
 ## Contributing
 
-Commands live in the `templates` dir.
+Terraform commands live in the `templates` directory.
 
-Each command has a line for each partial.
+Each command has a line for each partial, found in the `partials` directory.
 
 A partial contains the logic for a command line argument.

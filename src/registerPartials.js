@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
 
-const partialsPath = path.join(__dirname, '..', 'partials');
+const { partialsPath } = require('./constants');
 
 module.exports = () => {
   const partialFiles = fs.readdirSync(partialsPath);

@@ -5,10 +5,10 @@ const merge = require('deepmerge');
 const Handlebars = require('handlebars');
 
 const { templatePath } = require('./constants');
+const defaults = require('./defaults');
 const registerPartials = require('./registerPartials');
 const registerHelpers = require('./registerHelpers');
 const shExec = require('./shExec');
-const defaults = require('./defaults');
 
 class Terrajs {
   constructor(options = {}) {

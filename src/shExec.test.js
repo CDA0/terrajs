@@ -31,26 +31,52 @@ describe('shExec', () => {
   });
 
   describe('reject', () => {
-    beforeEach(() => {
-      exec = td.function();
-      td.when(exec(td.matchers.isA(String), td.matchers.isA(Object))).thenCallback(1, 'stdout', 'stderr');
-      td.replace('shelljs', { exec });
-      shExec = require('./shExec');
+    describe('terraformError', () => {
+      beforeEach(() => {
+        exec = td.function();
+        td.when(exec(td.matchers.isA(String), td.matchers.isA(Object))).thenCallback(1, 'stdout', 'stderr');
+        td.replace('shelljs', { exec });
+        shExec = require('./shExec');
+      });
+
+      afterEach(() => {
+        td.reset();
+      });
+
+      it('should reject with stdout, stderr, and an exit code', async () => {
+        try {
+          await shExec('test', { cwd: 'cwd' });
+        } catch (e) {
+          assert(e instanceof Error);
+          assert.equal(e.code, 1);
+          assert.equal(e.stdout, 'stdout');
+          assert.equal(e.stderr, 'stderr');
+        }
+      });
     });
 
-    afterEach(() => {
-      td.reset();
-    });
+    describe('terraformDiffError', () => {
+      beforeEach(() => {
+        exec = td.function();
+        td.when(exec(td.matchers.isA(String), td.matchers.isA(Object))).thenCallback(2, 'stdout', 'stderr');
+        td.replace('shelljs', { exec });
+        shExec = require('./shExec');
+      });
 
-    it('should reject with stdout, stderr, and an exit code', async () => {
-      try {
-        await shExec('test', { cwd: 'cwd' });
-      } catch (e) {
-        assert(e instanceof Error);
-        assert.equal(e.code, 1);
-        assert.equal(e.stdout, 'stdout');
-        assert.equal(e.stderr, 'stderr');
-      }
+      afterEach(() => {
+        td.reset();
+      });
+
+      it('should reject with stdout, stderr, and an exit code', async () => {
+        try {
+          await shExec('test', { cwd: 'cwd' });
+        } catch (e) {
+          assert(e instanceof Error);
+          assert.equal(e.code, 2);
+          assert.equal(e.stdout, 'stdout');
+          assert.equal(e.stderr, 'stderr');
+        }
+      });
     });
   });
 });

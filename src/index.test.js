@@ -157,7 +157,7 @@ describe('index', () => {
     });
   });
 
-  describe('apply', () => {
+  describe('commandWrapper', () => {
     let Terrajs;
     let tf;
     let buildCommand;
@@ -176,594 +176,454 @@ describe('index', () => {
 
     it('should call build command if execute is not set', async () => {
       tf.execute = false;
-      await tf.apply();
-      td.verify(buildCommand('apply', {}));
+      await tf.commandWrapper('any-command', {});
+      td.verify(buildCommand('any-command', {}));
     });
 
     it('should call execute command if execute is set', async () => {
+      await tf.commandWrapper('any-command', {}, {});
+      td.verify(buildAndExec('any-command', {}, {}));
+    });
+  });
+
+  describe('apply', () => {
+    let Terrajs;
+    let tf;
+    let commandWrapper;
+
+    beforeEach(() => {
+      td.replace('./registerHelpers');
+      td.replace('./registerPartials');
+      Terrajs = require('./index');
+      tf = new Terrajs();
+      commandWrapper = td.replace(tf, 'commandWrapper');
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call commandWrapper', async () => {
       await tf.apply();
-      td.verify(buildAndExec('apply', {}));
+      td.verify(commandWrapper('apply', {}, {}));
     });
   });
 
   describe('destroy', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
-      td.when(shExec('terraform -version'), { ignoreExtraArgs: true }).thenReturn('Terraform v0.12.15');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.destroy();
-      td.verify(buildCommand('destroy', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.destroy();
-      td.verify(buildAndExec('destroy', {}));
+      td.verify(commandWrapper('destroy', {}, {}));
     });
   });
 
   describe('fmt', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.fmt();
-      td.verify(buildCommand('fmt', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.fmt();
-      td.verify(buildAndExec('fmt', {}));
+      td.verify(commandWrapper('fmt', {}, {}));
     });
   });
 
   describe('get', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.get();
-      td.verify(buildCommand('get', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.get();
-      td.verify(buildAndExec('get', {}));
+      td.verify(commandWrapper('get', {}, {}));
     });
   });
 
   describe('graph', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.graph();
-      td.verify(buildCommand('graph', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.graph();
-      td.verify(buildAndExec('graph', {}));
+      td.verify(commandWrapper('graph', {}, {}));
     });
   });
 
   describe('init', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.init();
-      td.verify(buildCommand('init', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.init();
-      td.verify(buildAndExec('init', {}));
+      td.verify(commandWrapper('init', {}, {}));
     });
   });
 
   describe('import', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.import();
-      td.verify(buildCommand('import', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.import();
-      td.verify(buildAndExec('import', {}));
+      td.verify(commandWrapper('import', {}, {}));
     });
   });
 
   describe('output', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.output();
-      td.verify(buildCommand('output', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.output();
-      td.verify(buildAndExec('output', {}));
+      td.verify(commandWrapper('output', {}, {}));
     });
   });
 
   describe('plan', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.plan();
-      td.verify(buildCommand('plan', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.plan();
-      td.verify(buildAndExec('plan', {}));
+      td.verify(commandWrapper('plan', {}, {}));
     });
   });
 
   describe('providers', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.providers();
-      td.verify(buildCommand('providers', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.providers();
-      td.verify(buildAndExec('providers', {}));
+      td.verify(commandWrapper('providers', {}, {}));
     });
   });
 
   describe('refresh', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.refresh();
-      td.verify(buildCommand('refresh', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.refresh();
-      td.verify(buildAndExec('refresh', {}));
+      td.verify(commandWrapper('refresh', {}, {}));
     });
   });
 
   describe('show', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.show();
-      td.verify(buildCommand('show', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.show();
-      td.verify(buildAndExec('show', {}));
+      td.verify(commandWrapper('show', {}, {}));
     });
   });
 
   describe('taint', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.taint();
-      td.verify(buildCommand('taint', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.taint();
-      td.verify(buildAndExec('taint', {}));
+      td.verify(commandWrapper('taint', {}, {}));
     });
   });
 
   describe('untaint', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.untaint();
-      td.verify(buildCommand('untaint', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.untaint();
-      td.verify(buildAndExec('untaint', {}));
+      td.verify(commandWrapper('untaint', {}, {}));
     });
   });
 
   describe('validate', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.validate();
-      td.verify(buildCommand('validate', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.validate();
-      td.verify(buildAndExec('validate', {}));
+      td.verify(commandWrapper('validate', {}, {}));
     });
   });
 
   describe('version', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.version();
-      td.verify(buildCommand('version', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.version();
-      td.verify(buildAndExec('version', {}));
+      td.verify(commandWrapper('version', {}, {}));
     });
   });
 
   describe('workspaceDelete', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.workspaceDelete();
-      td.verify(buildCommand('workspace-delete', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.workspaceDelete();
-      td.verify(buildAndExec('workspace-delete', {}));
+      td.verify(commandWrapper('workspace-delete', {}, {}));
     });
   });
 
   describe('workspaceList', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.workspaceList();
-      td.verify(buildCommand('workspace-list', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.workspaceList();
-      td.verify(buildAndExec('workspace-list', {}));
+      td.verify(commandWrapper('workspace-list', {}, {}));
     });
   });
 
   describe('workspaceNew', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.workspaceNew();
-      td.verify(buildCommand('workspace-new', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.workspaceNew();
-      td.verify(buildAndExec('workspace-new', {}));
+      td.verify(commandWrapper('workspace-new', {}, {}));
     });
   });
 
   describe('workspaceSelect', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.workspaceSelect();
-      td.verify(buildCommand('workspace-select', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.workspaceSelect();
-      td.verify(buildAndExec('workspace-select', {}));
+      td.verify(commandWrapper('workspace-select', {}, {}));
     });
   });
 
   describe('workspaceShow', () => {
     let Terrajs;
     let tf;
-    let buildCommand;
-    let buildAndExec;
+    let commandWrapper;
 
     beforeEach(() => {
       td.replace('./registerHelpers');
       td.replace('./registerPartials');
       Terrajs = require('./index');
       tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
+      commandWrapper = td.replace(tf, 'commandWrapper');
     });
 
     afterEach(() => td.reset());
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
+    it('should call commandWrapper', async () => {
       await tf.workspaceShow();
-      td.verify(buildCommand('workspace-show', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.workspaceShow();
-      td.verify(buildAndExec('workspace-show', {}));
+      td.verify(commandWrapper('workspace-show', {}, {}));
     });
   });
 });

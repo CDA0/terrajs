@@ -86,7 +86,11 @@ describe('helpers', () => {
     });
   });
 
+<<<<<<< HEAD
   describe('ifVersionSatisfies', () => {
+=======
+  describe('ifObject', () => {
+>>>>>>> Allow for map variables
     const opts = {};
     beforeEach(() => {
       opts.fn = td.function();

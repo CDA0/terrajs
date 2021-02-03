@@ -1,7 +1,7 @@
 {{#each var}}
-{{#ifArray this}}
--var '{{camelToSnake @key}}=[{{#each this}}"{{{this}}}"{{#unless @last}},{{/unless}}{{/each}}]'
+{{#ifObject this}}
+-var='{{camelToSnake @key}}={{{json this}}}'
 {{else}}
--var {{camelToSnake @key}}="{{{this}}}"
-{{/ifArray}}
+-var="{{camelToSnake @key}}={{{this}}}"
+{{/ifObject}}
 {{/each}}

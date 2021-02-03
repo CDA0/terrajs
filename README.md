@@ -34,23 +34,23 @@ A module to help with creating Terraform commands.
 Terrajs will run Terraform commands from the directory passed in with `terraformDir`.
 
 ```js
-const tf = new Terrajs( { terraformDir: 'path/to/files.tf' } );
-const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
+const tf = new Terrajs( { terraformDir: 'path/to/configuration' } );
+await tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
 To view the generated Terraform command without running:
 
 ```js
-const tf = new Terrajs({ execute: false, terraformDir: 'path/to/files.tf' });
-tf.init({ backendConfig: { key: 'MY_KEY' } });
+const tf = new Terrajs({ execute: false, terraformDir: 'path/to/configuration' });
+console.log(await tf.init({ backendConfig: { key: 'MY_KEY' } }));
 ```
 
 If you need to use a Terraform binary that's not on your path as `terraform`,
 then you can tell Terrajs where to find it in the constructor.
 
 ```js
-const tf = new Terrajs( { command: 'terraform12', terraformDir: 'path/to/files.tf' } );
-const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
+const tf = new Terrajs( { command: 'terraform12', terraformDir: 'path/to/configuration' } );
+await tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
 ### Variables
@@ -58,7 +58,7 @@ const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
 Variables are mapped from JavaScript camelCase convention to Terraform CLI snake_case convention. For example:
 
 ```js
-tf.plan({
+await tf.plan({
   var: {
     subscriptionId: '123',
     tenantId: 'abc',
@@ -70,7 +70,7 @@ tf.plan({
 ...will be mapped to the following Terraform shell command:
 
 ```bash
-terraform plan -var subscription_id=123 -var tenant_id=abc -var 'zones=["A","B"]'
+terraform plan -var="subscription_id=123" -var="tenant_id=abc" -var='zones=["A","B"]'
 ```
 
 ## Test

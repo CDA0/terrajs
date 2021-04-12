@@ -7,6 +7,7 @@ const {
   ifneq,
   ifVersionSatisfies,
   includes,
+  parseVariable,
 } = require('./helpers');
 
 module.exports = () => {
@@ -17,4 +18,5 @@ module.exports = () => {
   Handlebars.registerHelper('ifneq', ifneq);
   Handlebars.registerHelper('ifVersionSatisfies', ifVersionSatisfies);
   Handlebars.registerHelper('includes', includes);
+  Handlebars.registerHelper('parseVariable', parseVariable);
 };

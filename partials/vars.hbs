@@ -1,7 +1,3 @@
 {{#each var}}
-{{#ifObject this}}
--var='{{camelToSnake @key}}={{{json this}}}'
-{{else}}
--var="{{camelToSnake @key}}={{{this}}}"
-{{/ifObject}}
+-var {{{parseVariable @key this}}}
 {{/each}}

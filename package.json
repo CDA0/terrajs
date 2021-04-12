@@ -16,7 +16,8 @@
   "author": "Craig Anderson <craig.anderson0@gmail.com> (https://github.com/cda0)",
   "contributors": [
     "Willem Le Roux <willem@avantgardeweb.co.uk> (https://github.com/hofnarwillie)",
-    "Fraser Davidson <fraser@fdavidson.com> (https://github.com/frasdav)"
+    "Fraser Davidson <fraser@fdavidson.com> (https://github.com/frasdav)",
+    "Chris Forbes <git@chrisforbes.dev> (https://github.com/kitforbes)"
   ],
   "license": "MIT",
   "husky": {

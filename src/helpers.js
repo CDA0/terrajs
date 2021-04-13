@@ -41,6 +41,10 @@ function ifArray(value, opts) {
   return (value instanceof Array) ? opts.fn(this) : opts.inverse(this);
 }
 
+function ifMajor(v1, v2, opts) {
+  return (Number(v1) > Number(v2)) ? opts.fn(this) : opts.inverse(this);
+}
+
 module.exports = {
   camelToKebab,
   camelToSnake,
@@ -51,4 +55,5 @@ module.exports = {
   caseHandlebarHelper,
   defaultHandlebarHelper,
   ifArray,
+  ifMajor,
 };

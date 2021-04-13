@@ -17,6 +17,6 @@ describe('registerHelpers', () => {
 
   it('should call exec with the correct arguments', () => {
     registerHelpers();
-    td.verify(registerHelper(td.matchers.isA(String), td.matchers.isA(Function)), { times: 9 });
+    td.verify(registerHelper(td.matchers.isA(String), td.matchers.isA(Function)), { times: 10 });
   });
 });

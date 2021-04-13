@@ -8,6 +8,7 @@ const {
   includes,
   ifeq,
   ifneq,
+  ifMajor,
 } = require('./helpers');
 
 describe('helpers', () => {
@@ -81,6 +82,26 @@ describe('helpers', () => {
 
     it('should call inverse function if values match', () => {
       ifneq('a', 'a', opts);
+      td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
+    });
+  });
+
+  describe('ifMajor', () => {
+    const opts = {};
+    beforeEach(() => {
+      opts.fn = td.function();
+      opts.inverse = td.function();
+    });
+
+    afterEach(() => td.reset());
+
+    it(`should call fn function if is major`, () => {
+      ifMajor('0.13', '0.12', opts);
+      td.verify(opts.fn(td.matchers.isA(Object)), { times: 1 });
+    });
+
+    it(`should call inverse function if values not major`, () => {
+      ifMajor('0.12', '0.13', opts);
       td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
     });
   });

@@ -9,6 +9,7 @@ const {
   caseHandlebarHelper,
   defaultHandlebarHelper,
   ifArray,
+  ifMajor,
 } = require('./helpers');
 
 module.exports = () => {
@@ -21,4 +22,5 @@ module.exports = () => {
   Handlebars.registerHelper('case', caseHandlebarHelper);
   Handlebars.registerHelper('default', defaultHandlebarHelper);
   Handlebars.registerHelper('ifArray', ifArray);
+  Handlebars.registerHelper('ifMajor', ifMajor);
 };

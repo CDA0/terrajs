@@ -1,10 +1,9 @@
 {{command}} graph
 {{> draw-cycles }}
-{{#ifVersionSatisfies version '>=0.12'}}
-{{> module-depth }}
-{{/ifVersionSatisfies}}
 {{#ifVersionSatisfies version '<0.12'}}
 {{> no-color }}
+{{else}}
+{{> module-depth }}
 {{/ifVersionSatisfies}}
 {{> type }}
 {{dir}}

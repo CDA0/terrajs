@@ -96,9 +96,9 @@ describe('index', () => {
 
     afterEach(() => td.reset());
 
-    it('should return the version string as "Major.Minor"', async () => {
+    it('should return the version string', async () => {
       const result = await tf.getTerraformVersion();
-      assert.strictEqual(result, '0.12');
+      assert.strictEqual(result, '0.12.15');
     });
   });
 

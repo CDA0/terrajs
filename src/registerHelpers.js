@@ -2,23 +2,19 @@ const Handlebars = require('handlebars');
 const {
   camelToKebab,
   camelToSnake,
-  includes,
+  ifArray,
   ifeq,
   ifneq,
-  switchHandlebarHelper,
-  caseHandlebarHelper,
-  defaultHandlebarHelper,
-  ifArray,
+  ifVersionSatisfies,
+  includes,
 } = require('./helpers');
 
 module.exports = () => {
   Handlebars.registerHelper('camelToKebab', camelToKebab);
   Handlebars.registerHelper('camelToSnake', camelToSnake);
-  Handlebars.registerHelper('includes', includes);
+  Handlebars.registerHelper('ifArray', ifArray);
   Handlebars.registerHelper('ifeq', ifeq);
   Handlebars.registerHelper('ifneq', ifneq);
-  Handlebars.registerHelper('switch', switchHandlebarHelper);
-  Handlebars.registerHelper('case', caseHandlebarHelper);
-  Handlebars.registerHelper('default', defaultHandlebarHelper);
-  Handlebars.registerHelper('ifArray', ifArray);
+  Handlebars.registerHelper('ifVersionSatisfies', ifVersionSatisfies);
+  Handlebars.registerHelper('includes', includes);
 };

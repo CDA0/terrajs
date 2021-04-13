@@ -50,10 +50,10 @@ function parseVariable(key, value) {
 module.exports = {
   camelToKebab,
   camelToSnake,
-  includes,
+  ifArray,
   ifeq,
   ifneq,
-  ifArray,
   ifVersionSatisfies,
+  includes,
   parseVariable,
 };

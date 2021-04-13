@@ -4,9 +4,9 @@
 {{> input }}
 {{> lock }}
 {{> lock-timeout }}
-{{#ifeq version '0.11'}}
+{{#ifVersionSatisfies version '<0.12'}}
 {{> module-depth }}
-{{/ifeq}}
+{{/ifVersionSatisfies}}
 {{> no-color}}
 {{> out }}
 {{> parallelism }}

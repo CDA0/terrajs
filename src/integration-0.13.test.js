@@ -10,7 +10,7 @@ describe('integration (Terraform 0.13)', () => {
   beforeEach(() => {
     tf = new Terrajs({ execute: false });
     td.replace(tf, 'getTerraformVersion');
-    td.when(tf.getTerraformVersion()).thenReturn('0.13');
+    td.when(tf.getTerraformVersion()).thenReturn('0.13.0');
   });
 
   afterEach(() => td.reset());

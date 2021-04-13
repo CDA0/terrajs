@@ -8,7 +8,7 @@ const {
   includes,
   ifeq,
   ifneq,
-  ifMajor,
+  ifVersionSatisfies,
 } = require('./helpers');
 
 describe('helpers', () => {
@@ -86,7 +86,7 @@ describe('helpers', () => {
     });
   });
 
-  describe('ifMajor', () => {
+  describe('ifVersionSatisfies', () => {
     const opts = {};
     beforeEach(() => {
       opts.fn = td.function();
@@ -95,13 +95,13 @@ describe('helpers', () => {
 
     afterEach(() => td.reset());
 
-    it(`should call fn function if is major`, () => {
-      ifMajor('0.13', '0.12', opts);
+    it('should call fn function if version is within the range', () => {
+      ifVersionSatisfies('0.11.14', '<0.12', opts);
       td.verify(opts.fn(td.matchers.isA(Object)), { times: 1 });
     });
 
-    it(`should call inverse function if values not major`, () => {
-      ifMajor('0.12', '0.13', opts);
+    it('should call inverse function if version is outside of the range', () => {
+      ifVersionSatisfies('0.11.14', '>=0.12', opts);
       td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
     });
   });

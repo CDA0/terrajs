@@ -1,13 +1,10 @@
 {{command}} validate
-
-{{#switch version}}
-  {{#case "0.12"}}
+{{#ifVersionSatisfies version '>=0.12'}}
 {{> json }}
-  {{/case}}
-  {{#case "0.11"}}
+{{/ifVersionSatisfies}}
+{{#ifVersionSatisfies version '<0.12'}}
 {{> check-variables }}
 {{> vars }}
 {{> var-files }}
-  {{/case}}
-{{/switch}}
+{{/ifVersionSatisfies}}
 {{> no-color }}

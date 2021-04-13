@@ -1,7 +1,7 @@
 {{command}} output
 {{> state }}
 {{> no-color }}
-{{#ifeq version '0.11'}}
+{{#ifVersionSatisfies version '<0.12'}}
 {{> module }}
-{{/ifeq}}
+{{/ifVersionSatisfies}}
 {{> json }}

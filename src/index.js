@@ -28,7 +28,7 @@ class Terrajs {
 
   async getTerraformVersion() {
     const response = await shExec(`${this.command} -version`, { silent: true });
-    return response.split('v')[1].split('.').slice(0, 2).join('.');
+    return response.split('v')[1].trim();
   }
 
   async buildCommand(action, args) {

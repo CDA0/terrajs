@@ -8,6 +8,7 @@ const {
   includes,
   ifeq,
   ifneq,
+  ifVersionSatisfies,
 } = require('./helpers');
 
 describe('helpers', () => {
@@ -81,6 +82,26 @@ describe('helpers', () => {
 
     it('should call inverse function if values match', () => {
       ifneq('a', 'a', opts);
+      td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
+    });
+  });
+
+  describe('ifVersionSatisfies', () => {
+    const opts = {};
+    beforeEach(() => {
+      opts.fn = td.function();
+      opts.inverse = td.function();
+    });
+
+    afterEach(() => td.reset());
+
+    it('should call fn function if version is within the range', () => {
+      ifVersionSatisfies('0.11.14', '<0.12', opts);
+      td.verify(opts.fn(td.matchers.isA(Object)), { times: 1 });
+    });
+
+    it('should call inverse function if version is outside of the range', () => {
+      ifVersionSatisfies('0.11.14', '>=0.12', opts);
       td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
     });
   });

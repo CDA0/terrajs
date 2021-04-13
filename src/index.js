@@ -27,7 +27,10 @@ class Terrajs {
   }
 
   async getTerraformVersion() {
-    const response = await shExec(`${this.command} -version`, { silent: true });
+    const response = await shExec(`${this.command} -version`, {
+      env: { CHECKPOINT_DISABLE: 1 },
+      silent: true,
+    });
     return response.split('v')[1].trim();
   }
 

@@ -16,8 +16,8 @@ function ifArray(value, opts) {
   return (value instanceof Array) ? opts.fn(this) : opts.inverse(this);
 }
 
-function ifMajor(v1, v2, opts) {
-  return (Number(v1) > Number(v2)) ? opts.fn(this) : opts.inverse(this);
+function ifVersionSatisfies(version, range, opts) {
+  return (semver.satisfies(version, range)) ? opts.fn(this) : opts.inverse(this);
 }
 
 module.exports = {

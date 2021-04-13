@@ -1,4 +1,8 @@
 {{command}} show
+{{#ifMajor version '0.11'}}
+{{> json }}
+{{else}}
 {{> module-depth }}
+{{/ifMajor}}
 {{> no-color }}
 {{dir}}

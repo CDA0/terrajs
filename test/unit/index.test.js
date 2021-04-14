@@ -2,6 +2,7 @@
 /* eslint-env mocha */
 const assert = require('assert');
 const td = require('testdouble');
+const { camelToKebab } = require('../../src/helpers');
 
 describe('index', () => {
   let shExec;
@@ -64,566 +65,174 @@ describe('index', () => {
     });
   });
 
-  describe('getTemplate', () => {
-    let readFileSync;
-    let Terrajs;
+  describe('functions', () => {
+    describe('getTemplate', () => {
+      let readFileSync;
+      let Terrajs;
 
-    beforeEach(() => {
-      readFileSync = td.function();
-      td.when(readFileSync(td.matchers.anything(), 'utf-8')).thenReturn('{{test}}');
-      td.replace('fs', { readFileSync });
-      Terrajs = require('../../src/index');
+      beforeEach(() => {
+        readFileSync = td.function();
+        td.when(readFileSync(td.matchers.anything(), 'utf-8')).thenReturn('{{test}}');
+        td.replace('fs', { readFileSync });
+        Terrajs = require('../../src/index');
+      });
+
+      afterEach(() => td.reset());
+
+      it('should return a function', () => {
+        const fn = Terrajs.getTemplate('test');
+        assert.equal(typeof fn, 'function');
+      });
     });
 
-    afterEach(() => td.reset());
+    describe('getTerraformVersion', () => {
+      let Terrajs;
+      let tf;
 
-    it('should return a function', () => {
-      const fn = Terrajs.getTemplate('test');
-      assert.equal(typeof fn, 'function');
-    });
-  });
+      beforeEach(() => {
+        td.replace('../../src/registerHelpers');
+        td.replace('../../src/registerPartials');
+        Terrajs = require('../../src/index');
+        tf = new Terrajs();
+      });
 
-  describe('getTerraformVersion', () => {
-    let Terrajs;
-    let tf;
+      afterEach(() => td.reset());
 
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-    });
-
-    afterEach(() => td.reset());
-
-    it('should return the version string', async () => {
-      const result = await tf.getTerraformVersion();
-      assert.strictEqual(result, '0.12.15');
-    });
-  });
-
-  describe('buildCommand', () => {
-    let Terrajs;
-    let tf;
-    let getTemplate;
-    let template;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      template = td.function();
-      getTemplate = td.replace(Terrajs, 'getTemplate');
-      td.when(getTemplate('apply')).thenReturn(template);
-      td.when(template(td.matchers.isA(Object))).thenReturn('  abc\ndef\n  ');
+      it('should return the version string', async () => {
+        const result = await tf.getTerraformVersion();
+        assert.strictEqual(result, '0.12.15');
+      });
     });
 
-    afterEach(() => td.reset());
+    describe('buildCommand', () => {
+      let Terrajs;
+      let tf;
+      let getTemplate;
+      let template;
 
-    it('should trim spaces and replace new lines', async () => {
-      const cmd = await tf.buildCommand('apply', { test: 'abc' });
-      assert.equal(cmd, 'abc def');
-    });
-  });
+      beforeEach(() => {
+        td.replace('../../src/registerHelpers');
+        td.replace('../../src/registerPartials');
+        Terrajs = require('../../src/index');
+        tf = new Terrajs();
+        template = td.function();
+        getTemplate = td.replace(Terrajs, 'getTemplate');
+        td.when(getTemplate('apply')).thenReturn(template);
+        td.when(template(td.matchers.isA(Object))).thenReturn('  abc\ndef\n  ');
+      });
 
-  describe('buildAndExec', () => {
-    let Terrajs;
-    let tf;
-    let buildCommand;
-    let template;
+      afterEach(() => td.reset());
 
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      template = 'template';
-      buildCommand = td.replace(tf, 'buildCommand');
-      td.when(buildCommand('test', { test: 'abc' })).thenReturn(template);
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call exec with the compiled template', async () => {
-      await tf.buildAndExec('test', { test: 'abc' });
-      td.verify(shExec('template', {}));
+      it('should trim spaces and replace new lines', async () => {
+        const cmd = await tf.buildCommand('apply', { test: 'abc' });
+        assert.equal(cmd, 'abc def');
+      });
     });
 
-    it('should pass cwd to if terraformDir is set', async () => {
-      tf.terraformDir = 'pop';
-      await tf.buildAndExec('test', { test: 'abc' });
-      td.verify(shExec('template', { cwd: 'pop' }));
-    });
-  });
+    describe('buildAndExec', () => {
+      let Terrajs;
+      let tf;
+      let buildCommand;
+      let template;
 
-  describe('commandWrapper', () => {
-    let Terrajs;
-    let tf;
-    let buildCommand;
-    let buildAndExec;
+      beforeEach(() => {
+        td.replace('../../src/registerHelpers');
+        td.replace('../../src/registerPartials');
+        Terrajs = require('../../src/index');
+        tf = new Terrajs();
+        template = 'template';
+        buildCommand = td.replace(tf, 'buildCommand');
+        td.when(buildCommand('test', { test: 'abc' })).thenReturn(template);
+      });
 
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      buildCommand = td.replace(tf, 'buildCommand');
-      buildAndExec = td.replace(tf, 'buildAndExec');
-    });
+      afterEach(() => td.reset());
 
-    afterEach(() => td.reset());
+      it('should call exec with the compiled template', async () => {
+        await tf.buildAndExec('test', { test: 'abc' });
+        td.verify(shExec('template', {}));
+      });
 
-    it('should call build command if execute is not set', async () => {
-      tf.execute = false;
-      await tf.commandWrapper('any-command', {});
-      td.verify(buildCommand('any-command', {}));
-    });
-
-    it('should call execute command if execute is set', async () => {
-      await tf.commandWrapper('any-command', {}, {});
-      td.verify(buildAndExec('any-command', {}, {}));
-    });
-  });
-
-  describe('apply', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
+      it('should pass cwd to if terraformDir is set', async () => {
+        tf.terraformDir = 'pop';
+        await tf.buildAndExec('test', { test: 'abc' });
+        td.verify(shExec('template', { cwd: 'pop' }));
+      });
     });
 
-    afterEach(() => td.reset());
+    describe('commandWrapper', () => {
+      let Terrajs;
+      let tf;
+      let buildCommand;
+      let buildAndExec;
 
-    it('should call commandWrapper', async () => {
-      await tf.apply();
-      td.verify(commandWrapper('apply', {}, {}));
+      beforeEach(() => {
+        td.replace('../../src/registerHelpers');
+        td.replace('../../src/registerPartials');
+        Terrajs = require('../../src/index');
+        tf = new Terrajs();
+        buildCommand = td.replace(tf, 'buildCommand');
+        buildAndExec = td.replace(tf, 'buildAndExec');
+      });
+
+      afterEach(() => td.reset());
+
+      it('should call build command if execute is not set', async () => {
+        tf.execute = false;
+        await tf.commandWrapper('any-command', {});
+        td.verify(buildCommand('any-command', {}));
+      });
+
+      it('should call execute command if execute is set', async () => {
+        await tf.commandWrapper('any-command', {}, {});
+        td.verify(buildAndExec('any-command', {}, {}));
+      });
     });
   });
 
-  describe('destroy', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.destroy();
-      td.verify(commandWrapper('destroy', {}, {}));
-    });
-  });
-
-  describe('fmt', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.fmt();
-      td.verify(commandWrapper('fmt', {}, {}));
-    });
-  });
-
-  describe('get', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.get();
-      td.verify(commandWrapper('get', {}, {}));
-    });
-  });
-
-  describe('graph', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.graph();
-      td.verify(commandWrapper('graph', {}, {}));
-    });
-  });
-
-  describe('init', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.init();
-      td.verify(commandWrapper('init', {}, {}));
-    });
-  });
-
-  describe('import', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.import();
-      td.verify(commandWrapper('import', {}, {}));
-    });
-  });
-
-  describe('output', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.output();
-      td.verify(commandWrapper('output', {}, {}));
-    });
-  });
-
-  describe('plan', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.plan();
-      td.verify(commandWrapper('plan', {}, {}));
-    });
-  });
-
-  describe('providers', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.providers();
-      td.verify(commandWrapper('providers', {}, {}));
-    });
-  });
-
-  describe('refresh', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.refresh();
-      td.verify(commandWrapper('refresh', {}, {}));
-    });
-  });
-
-  describe('show', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.show();
-      td.verify(commandWrapper('show', {}, {}));
-    });
-  });
-
-  describe('taint', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.taint();
-      td.verify(commandWrapper('taint', {}, {}));
-    });
-  });
-
-  describe('untaint', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.untaint();
-      td.verify(commandWrapper('untaint', {}, {}));
-    });
-  });
-
-  describe('validate', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.validate();
-      td.verify(commandWrapper('validate', {}, {}));
-    });
-  });
-
-  describe('version', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.version();
-      td.verify(commandWrapper('version', {}, {}));
-    });
-  });
-
-  describe('workspaceDelete', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.workspaceDelete();
-      td.verify(commandWrapper('workspace-delete', {}, {}));
-    });
-  });
-
-  describe('workspaceList', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.workspaceList();
-      td.verify(commandWrapper('workspace-list', {}, {}));
-    });
-  });
-
-  describe('workspaceNew', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.workspaceNew();
-      td.verify(commandWrapper('workspace-new', {}, {}));
-    });
-  });
-
-  describe('workspaceSelect', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.workspaceSelect();
-      td.verify(commandWrapper('workspace-select', {}, {}));
-    });
-  });
-
-  describe('workspaceShow', () => {
-    let Terrajs;
-    let tf;
-    let commandWrapper;
-
-    beforeEach(() => {
-      td.replace('../../src/registerHelpers');
-      td.replace('../../src/registerPartials');
-      Terrajs = require('../../src/index');
-      tf = new Terrajs();
-      commandWrapper = td.replace(tf, 'commandWrapper');
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call commandWrapper', async () => {
-      await tf.workspaceShow();
-      td.verify(commandWrapper('workspace-show', {}, {}));
+  describe('commands', () => {
+    [
+      'apply',
+      'destroy',
+      'fmt',
+      'get',
+      'graph',
+      'init',
+      'import',
+      'output',
+      'plan',
+      'providers',
+      'refresh',
+      'show',
+      'taint',
+      'untaint',
+      'validate',
+      'version',
+      'workspaceDelete',
+      'workspaceList',
+      'workspaceNew',
+      'workspaceSelect',
+      'workspaceShow',
+    ].forEach((terraformCommand) => {
+      describe(terraformCommand, () => {
+        let Terrajs;
+        let tf;
+        let commandWrapper;
+
+        beforeEach(() => {
+          td.replace('../../src/registerHelpers');
+          td.replace('../../src/registerPartials');
+          Terrajs = require('../../src/index');
+          tf = new Terrajs();
+          commandWrapper = td.replace(tf, 'commandWrapper');
+        });
+
+        afterEach(() => td.reset());
+
+        it('should call commandWrapper', async () => {
+          await tf[terraformCommand]();
+          td.verify(commandWrapper(camelToKebab(terraformCommand), {}, {}));
+        });
+      });
     });
   });
 });

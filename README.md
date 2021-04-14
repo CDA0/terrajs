@@ -34,31 +34,33 @@ A module to help with creating Terraform commands.
 Terrajs will run Terraform commands from the directory passed in with `terraformDir`.
 
 ```js
-const tf = new Terrajs( { terraformDir: 'path/to/files.tf' } );
-const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
+const tf = new Terrajs( { terraformDir: 'path/to/configuration' } );
+await tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
 
 To view the generated Terraform command without running:
 
 ```js
-const tf = new Terrajs({ execute: false, terraformDir: 'path/to/files.tf' });
-tf.init({ backendConfig: { key: 'MY_KEY' } });
+const tf = new Terrajs({ execute: false, terraformDir: 'path/to/configuration' });
+console.log(await tf.init({ backendConfig: { key: 'MY_KEY' } }));
 ```
 
 If you need to use a Terraform binary that's not on your path as `terraform`,
 then you can tell Terrajs where to find it in the constructor.
 
 ```js
-const tf = new Terrajs( { command: 'terraform12', terraformDir: 'path/to/files.tf' } );
-const cmdString = tf.init({ backendConfig: { key: 'MY_KEY' } });
+const tf = new Terrajs( { command: 'terraform12', terraformDir: 'path/to/configuration' } );
+await tf.init({ backendConfig: { key: 'MY_KEY' } });
 ```
+
+See `example.js` for a quick impression of how to use the extra commands.
 
 ### Variables
 
 Variables are mapped from JavaScript camelCase convention to Terraform CLI snake_case convention. For example:
 
 ```js
-tf.plan({
+await tf.plan({
   var: {
     subscriptionId: '123',
     tenantId: 'abc',
@@ -67,11 +69,23 @@ tf.plan({
 });
 ```
 
-...will be mapped to the following Terraform shell command:
+...will be mapped to the following command:
 
 ```bash
-terraform plan -var subscription_id=123 -var tenant_id=abc -var 'zones=["A","B"]'
+terraform plan -var "subscription_id=123" -var "tenant_id=abc" -var 'zones=["A","B"]'
 ```
+
+...or on Windows (Command Prompt):
+
+```batch
+terraform plan -var "subscription_id=123" -var "tenant_id=abc" -var "zones=[\"A\",\"B\"]"
+```
+
+If variables are not being represented as you expect,
+please set `TF_LOG=trace` and check to see what Terraform is receiving.
+Terrajs uses the default shell assumed by [`child_process`][child-process] which is generally `/bin/sh` and `cmd.exe` (on Windows).
+If a variable's value is quite complex with special characters,
+this may cause problems with the shell's interpolation.
 
 ## Test
 
@@ -88,3 +102,5 @@ Terraform commands live in the `templates` directory.
 Each command has a line for each partial, found in the `partials` directory.
 
 A partial contains the logic for a command line argument.
+
+[child-process]: https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback

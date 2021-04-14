@@ -1,4 +1,8 @@
 {{command}} show
+{{#ifVersionSatisfies version '<0.12'}}
 {{> module-depth }}
+{{else}}
+{{> json }}
+{{/ifVersionSatisfies}}
 {{> no-color }}
 {{dir}}

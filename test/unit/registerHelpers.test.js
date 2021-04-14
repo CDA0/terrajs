@@ -8,7 +8,7 @@ describe('registerHelpers', () => {
   beforeEach(() => {
     registerHelper = td.function();
     td.replace('handlebars', { registerHelper });
-    registerHelpers = require('./registerHelpers');
+    registerHelpers = require('../../src/registerHelpers');
   });
 
   afterEach(() => {

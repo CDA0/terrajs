@@ -5,6 +5,7 @@ const td = require('testdouble');
 describe('registerPartials', () => {
   let registerPartial;
   let registerPartials;
+
   beforeEach(() => {
     registerPartial = td.function();
     const readdirSync = td.function();
@@ -13,7 +14,7 @@ describe('registerPartials', () => {
     td.when(readFileSync(td.matchers.isA(String), 'utf-8')).thenReturn('{{template}}');
     td.replace('handlebars', { registerPartial });
     td.replace('fs', { readdirSync, readFileSync });
-    registerPartials = require('./registerPartials');
+    registerPartials = require('../../src/registerPartials');
   });
 
   afterEach(() => {

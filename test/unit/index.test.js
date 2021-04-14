@@ -7,7 +7,7 @@ describe('index', () => {
   let shExec;
 
   beforeEach(() => {
-    shExec = td.replace('./shExec');
+    shExec = td.replace('../../src/shExec');
     td.when(shExec('terraform -version'), { ignoreExtraArgs: true }).thenReturn('Terraform v0.12.15');
   });
 
@@ -24,9 +24,9 @@ describe('index', () => {
       readFileSync = td.function();
       td.when(readFileSync(td.matchers.anything(), 'utf-8')).thenReturn('{{test}}');
       td.replace('fs', { readFileSync });
-      helpers = td.replace('./registerHelpers');
-      partials = td.replace('./registerPartials');
-      Terrajs = require('./index');
+      helpers = td.replace('../../src/registerHelpers');
+      partials = td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
     });
 
     afterEach(() => td.reset());
@@ -72,7 +72,7 @@ describe('index', () => {
       readFileSync = td.function();
       td.when(readFileSync(td.matchers.anything(), 'utf-8')).thenReturn('{{test}}');
       td.replace('fs', { readFileSync });
-      Terrajs = require('./index');
+      Terrajs = require('../../src/index');
     });
 
     afterEach(() => td.reset());
@@ -88,9 +88,9 @@ describe('index', () => {
     let tf;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
     });
 
@@ -109,9 +109,9 @@ describe('index', () => {
     let template;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       template = td.function();
       getTemplate = td.replace(Terrajs, 'getTemplate');
@@ -134,9 +134,9 @@ describe('index', () => {
     let template;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       template = 'template';
       buildCommand = td.replace(tf, 'buildCommand');
@@ -164,9 +164,9 @@ describe('index', () => {
     let buildAndExec;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       buildCommand = td.replace(tf, 'buildCommand');
       buildAndExec = td.replace(tf, 'buildAndExec');
@@ -192,9 +192,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -213,9 +213,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -234,9 +234,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -255,9 +255,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -276,9 +276,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -297,9 +297,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -318,9 +318,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -339,9 +339,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -360,9 +360,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -381,9 +381,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -402,9 +402,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -423,9 +423,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -444,9 +444,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -465,9 +465,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -486,9 +486,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -507,9 +507,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -528,9 +528,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -549,9 +549,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -570,9 +570,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -591,9 +591,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });
@@ -612,9 +612,9 @@ describe('index', () => {
     let commandWrapper;
 
     beforeEach(() => {
-      td.replace('./registerHelpers');
-      td.replace('./registerPartials');
-      Terrajs = require('./index');
+      td.replace('../../src/registerHelpers');
+      td.replace('../../src/registerPartials');
+      Terrajs = require('../../src/index');
       tf = new Terrajs();
       commandWrapper = td.replace(tf, 'commandWrapper');
     });

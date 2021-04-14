@@ -9,7 +9,7 @@ const {
   ifeq,
   ifneq,
   ifVersionSatisfies,
-} = require('./helpers');
+} = require('../../src/helpers');
 
 describe('helpers', () => {
   describe('camelToKebab', () => {

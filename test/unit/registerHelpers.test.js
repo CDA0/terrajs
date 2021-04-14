@@ -5,6 +5,7 @@ const td = require('testdouble');
 describe('registerHelpers', () => {
   let registerHelper;
   let registerHelpers;
+
   beforeEach(() => {
     registerHelper = td.function();
     td.replace('handlebars', { registerHelper });

@@ -4,8 +4,10 @@
   "description": "A node interface to Terraform",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha ./test/unit/**/*.test.js",
-    "coverage": "nyc npm run test",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:integration": "mocha ./test/integration/integration.test.js",
+    "test:unit": "mocha ./test/unit/**/*.test.js",
+    "coverage": "nyc npm run test:unit",
     "lint": "eslint ./src/**/*.js ./test/**/*.js ./example.js",
     "ci": "npm run lint && npm run coverage"
   },

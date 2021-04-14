@@ -27,6 +27,7 @@ describe('helpers', () => {
 
   describe('ifVersionSatisfies', () => {
     const opts = {};
+
     beforeEach(() => {
       opts.fn = td.function();
       opts.inverse = td.function();
@@ -47,6 +48,7 @@ describe('helpers', () => {
 
   describe('includes', () => {
     const opts = {};
+
     beforeEach(() => {
       opts.fn = td.function();
       opts.inverse = td.function();

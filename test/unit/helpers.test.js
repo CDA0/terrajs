@@ -5,8 +5,6 @@ const td = require('testdouble');
 const {
   camelToKebab,
   camelToSnake,
-  ifeq,
-  ifneq,
   ifVersionSatisfies,
   includes,
   parseVariable,
@@ -24,46 +22,6 @@ describe('helpers', () => {
     it('should convert a camel cased string to snake case', () => {
       const response = camelToSnake('snakeCase');
       assert.equal(response, 'snake_case');
-    });
-  });
-
-  describe('ifeq', () => {
-    const opts = {};
-    beforeEach(() => {
-      opts.fn = td.function();
-      opts.inverse = td.function();
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call fn function if values match', () => {
-      ifeq('a', 'a', opts);
-      td.verify(opts.fn(td.matchers.isA(Object)), { times: 1 });
-    });
-
-    it('should call inverse function if values do not match', () => {
-      ifeq('a', 'b', opts);
-      td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
-    });
-  });
-
-  describe('ifneq', () => {
-    const opts = {};
-    beforeEach(() => {
-      opts.fn = td.function();
-      opts.inverse = td.function();
-    });
-
-    afterEach(() => td.reset());
-
-    it('should call fn function if values do not match', () => {
-      ifneq('a', 'b', opts);
-      td.verify(opts.fn(td.matchers.isA(Object)), { times: 1 });
-    });
-
-    it('should call inverse function if values match', () => {
-      ifneq('a', 'a', opts);
-      td.verify(opts.inverse(td.matchers.isA(Object)), { times: 1 });
     });
   });
 

@@ -1,0 +1,6 @@
+*
+!partials/**/*
+!src/**/*
+!templates/**/*
+!package.json
+!README.md

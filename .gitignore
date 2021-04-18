@@ -1,6 +1,7 @@
-.terraform
+.nyc_output/
+.terraform/
+node_modules/
 *.backup
+*.tgz
 *.tfplan
 *.tfstate
-node_modules
-.nyc_output/

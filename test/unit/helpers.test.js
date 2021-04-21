@@ -89,6 +89,12 @@ describe('helpers', () => {
         assert.equal(response, '"some_var=West Europe"');
       });
 
+      it('should correctly parse a boolean variable', () => {
+        const variable = true;
+        const response = parseVariable('someVar', variable);
+        assert.equal(response, '"some_var=true"');
+      });
+
       it('should correctly parse a list variable', () => {
         const variable = ['Apple', 'Banana'];
         const response = parseVariable('someVar', variable);
@@ -129,6 +135,12 @@ describe('helpers', () => {
         const variable = 'West Europe';
         const response = parseVariable('someVar', variable);
         assert.equal(response, '"some_var=West Europe"');
+      });
+
+      it('should correctly parse a boolean variable', () => {
+        const variable = true;
+        const response = parseVariable('someVar', variable);
+        assert.equal(response, '"some_var=true"');
       });
 
       it('should correctly parse a list variable', () => {

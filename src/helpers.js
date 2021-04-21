@@ -43,6 +43,10 @@ function parseVariable(key, value) {
     return `'${parsedKey}=${parsedValue.replace(/'/g, '\\\'')}'`;
   }
 
+  if (typeof value === 'boolean') {
+    return `"${parsedKey}=${value}"`;
+  }
+
   // Double-quotes can prematurely close the string, so they need to be escaped.
   return `"${parsedKey}=${value.replace(/"/g, '\\"')}"`;
 }

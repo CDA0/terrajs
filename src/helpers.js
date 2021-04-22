@@ -33,12 +33,13 @@ function parseVariable(key, value) {
     return `'${parsedKey}=${parsedValue.replace(/'/g, '\\\'')}'`;
   }
 
-  if (typeof value === 'boolean') {
-    return `"${parsedKey}=${value}"`;
+  if (typeof value === 'string') {
+    // Double-quotes can prematurely close the string, so they need to be escaped.
+    return `"${parsedKey}=${value.replace(/"/g, '\\"')}"`;
   }
 
-  // Double-quotes can prematurely close the string, so they need to be escaped.
-  return `"${parsedKey}=${value.replace(/"/g, '\\"')}"`;
+  // Booleans and numbers can be returned without parsing.
+  return `"${parsedKey}=${value}"`;
 }
 
 module.exports = {

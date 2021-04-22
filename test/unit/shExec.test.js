@@ -12,7 +12,7 @@ describe('shExec', () => {
       exec = td.function();
       td.when(exec(td.matchers.isA(String), td.matchers.isA(Object))).thenCallback(0, 'stdout', 'stderr');
       td.replace('shelljs', { exec });
-      shExec = require('./shExec');
+      shExec = require('../../src/shExec');
     });
 
     afterEach(() => {
@@ -36,7 +36,7 @@ describe('shExec', () => {
         exec = td.function();
         td.when(exec(td.matchers.isA(String), td.matchers.isA(Object))).thenCallback(1, 'stdout', 'stderr');
         td.replace('shelljs', { exec });
-        shExec = require('./shExec');
+        shExec = require('../../src/shExec');
       });
 
       afterEach(() => {
@@ -60,7 +60,7 @@ describe('shExec', () => {
         exec = td.function();
         td.when(exec(td.matchers.isA(String), td.matchers.isA(Object))).thenCallback(2, 'stdout', 'stderr');
         td.replace('shelljs', { exec });
-        shExec = require('./shExec');
+        shExec = require('../../src/shExec');
       });
 
       afterEach(() => {

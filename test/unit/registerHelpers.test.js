@@ -5,10 +5,11 @@ const td = require('testdouble');
 describe('registerHelpers', () => {
   let registerHelper;
   let registerHelpers;
+
   beforeEach(() => {
     registerHelper = td.function();
     td.replace('handlebars', { registerHelper });
-    registerHelpers = require('./registerHelpers');
+    registerHelpers = require('../../src/registerHelpers');
   });
 
   afterEach(() => {
@@ -17,6 +18,6 @@ describe('registerHelpers', () => {
 
   it('should call exec with the correct arguments', () => {
     registerHelpers();
-    td.verify(registerHelper(td.matchers.isA(String), td.matchers.isA(Function)), { times: 8 });
+    td.verify(registerHelper(td.matchers.isA(String), td.matchers.isA(Function)), { times: 5 });
   });
 });

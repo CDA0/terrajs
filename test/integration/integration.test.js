@@ -20,4 +20,8 @@ describe('Integration Tests', () => {
     require('./0.14/destroy.test');
     require('./0.14/plan.test');
   });
+
+  describe('Terraform v0.15.x', () => {
+    require('./0.15/init.test');
+  });
 });

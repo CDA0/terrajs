@@ -1,4 +1,6 @@
-/* eslint-disable global-require *//* eslint-env mocha */describe('Integration Tests', () => {
+/* eslint-disable global-require */
+/* eslint-env mocha */
+describe('Integration Tests', () => {
   describe('Terraform v0.11.x', () => {
     require('./0.11/destroy.test');
     require('./0.11/plan.test');

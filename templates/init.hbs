@@ -9,3 +9,9 @@
 {{> plugin-dir }}
 {{> reconfigure }}
 {{> upgrade }}
+{{#ifVersionSatisfies version '<=0.14'}} 
+{{> get-plugins }}
+{{> lock }}
+{{> lock-timeout }}
+{{> verify-plugins }}
+{{/ifVersionSatisfies}}

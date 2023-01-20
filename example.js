@@ -15,7 +15,7 @@ const example = async () => {
     tf.show({ moduleDepth: 5 }),
     tf.init({ backendConfig: { key: 'KEYKEYKEY' } }),
     tf.get({ update: true, dir: 'some/path' }),
-    tf.import({ address: 'a_resource.exmple', id: '/unique/identifier' }),
+    tf.import({ address: 'a_resource.example[\\"indexer\\"]', id: '/unique/identifier' }),
     tf.refresh({ var: { environment: 'SP' }, target: ['a_resource.example'] }),
     tf.plan({
       var: {
